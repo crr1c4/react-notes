@@ -11,22 +11,31 @@ const NoteCreator = (props) => {
     setDescription("");
   };
 
-  // todo: handle error of empty inputs
   // todo: create a error component
   // todo: localstorage
   // todo: add focus to inputs
 
-  const createNote = () => {
-    const date = new Date();
-    const note = {
-      id: genId(),
-      title,
-      description,
-      done: false,
-      day: date.toLocaleDateString(),
-      time: date.toLocaleTimeString(),
-    };
-    console.log(note);
+  const createNote = async () => {
+    try {
+      const date = new Date();
+
+      if (title === "" && description === "")throw "Empty fields.";
+      if (title === "") throw "Empty Title.";
+      if (description === "") throw "Empty Description.";
+
+      const note = {
+        id: genId(),
+        title,
+        description,
+        done: false,
+        day: date.toLocaleDateString(),
+        time: date.toLocaleTimeString(),
+      };
+
+      console.log(note);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
