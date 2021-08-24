@@ -1,7 +1,7 @@
 import React from "react";
 import MainScreen from "./components/MainScreen";
 import SidePanel from "./components/SidePanel";
-import notesTest from "./components/test/test";
+import notesTest from "./examples/test";
 
 const App = () => {
   const [theme, setTheme] = React.useState("dark");
