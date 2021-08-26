@@ -12,7 +12,6 @@ export const useFocus = () => {
         newFocus === "note"
       ) {
         setFocus(newFocus);
-        // console.log(focus);
       } else {
         throw "Invalid literal.";
       }
