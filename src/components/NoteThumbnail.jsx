@@ -1,12 +1,12 @@
 import React from "react";
 
 const NoteThumbnail = (props) => {
-  const { note } = props;
+  const { note, changeFocus } = props;
   const { title, description, day, time } = note;
 
   return (
     <div
-      onClick={() => console.log("clikced: ", note)}
+      onClick={() => changeFocus("note")}
       className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white w-full py-2 px-4 rounded-xl cursor-pointer select-none"
     >
       {/* Date */}

@@ -3,17 +3,17 @@ import ThemeSwitch from "./ThemeSwitch";
 import NoteThumbnail from "./NoteThumbnail";
 
 const SidePanel = (props) => {
-  const { changeTheme, theme, notes, setShowNoteCreator, showNoteCreator } = props;
+  const { theme, changeTheme, focus, changeFocus, notes } = props;
 
   return (
     <div
       className={`sm:overflow-y-scroll col-span-4 sm:col-span-2 md:col-span-2 lg:col-span-1 bg-gray-100 dark:bg-gray-900 flex flex-col items-center py-4 px-4 sm:px-2 gap-3 sm:shadow-2xl ${
-        showNoteCreator ? "hidden" : ""
+        focus === "start" ? "hidden" : ""
       } sm:flex`}
     >
       <button
         className="bg-blue-600 dark:bg-indigo-800 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 hover:bg-blue-700 select-none"
-        onClick={() => setShowNoteCreator(true)}
+        onClick={() => changeFocus("create")}
       >
         create note
       </button>
@@ -26,7 +26,7 @@ const SidePanel = (props) => {
       </div>
 
       {notes.map((note) => (
-        <NoteThumbnail key={note.id} note={note}/>
+        <NoteThumbnail key={note.id} note={note} changeFocus={changeFocus} />
       ))}
     </div>
   );

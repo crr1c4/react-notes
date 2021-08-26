@@ -1,21 +1,33 @@
 import React from "react";
 import NoteCreator from "./NoteCreator";
 import StartMenu from "./StartMenu";
+import NoteFocused from "./NoteFocused";
 
 const MainScreen = (props) => {
-  const { showNoteCreator, setShowNoteCreator, theme } = props;
+  const { showNoteCreator, setShowNoteCreator, theme, focus, changeFocus } =
+    props;
 
   return (
     <div
       className={`max-h-screen sm:col-span-2 md:col-span-3 lg:col-span-2 col-span-full ${
-        !showNoteCreator ? "hidden" : ""
+        showNoteCreator ? "" : "hidden"
       } sm:block lg:col-span-3`}
     >
-      {showNoteCreator ? (
-        <NoteCreator setShowNoteCreator={setShowNoteCreator} />
-      ) : (
+      {focus === "start" ? (
         <StartMenu theme={theme} />
+      ) : focus === "create" ? (
+        <NoteCreator
+          setShowNoteCreator={setShowNoteCreator}
+          changeFocus={changeFocus}
+        />
+      ) : (
+        <NoteFocused />
       )}
+      {/* {showNoteCreator ? (
+    <NoteCreator setShowNoteCreator={setShowNoteCreator} />
+  ) : (
+    <StartMenu theme={theme} />
+  )} */}
     </div>
   );
 };
