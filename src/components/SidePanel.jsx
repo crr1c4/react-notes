@@ -3,7 +3,7 @@ import ThemeSwitch from "./ThemeSwitch";
 import NoteThumbnail from "./NoteThumbnail";
 
 const SidePanel = (props) => {
-  const { setTheme, theme, notes, setShowNoteCreator, showNoteCreator } = props;
+  const { changeTheme, theme, notes, setShowNoteCreator, showNoteCreator } = props;
 
   return (
     <div
@@ -18,7 +18,7 @@ const SidePanel = (props) => {
         create note
       </button>
 
-      <ThemeSwitch setTheme={setTheme} theme={theme} />
+      <ThemeSwitch changeTheme={changeTheme} theme={theme} />
 
       <div className="dark:text-white text-sm w-full flex items-center justify-end gap-1 select-none">
         <span className="font-bold text-lg">{notes.length}</span>
@@ -26,7 +26,7 @@ const SidePanel = (props) => {
       </div>
 
       {notes.map((note) => (
-        <NoteThumbnail key={note.id} note={note} />
+        <NoteThumbnail key={note.id} note={note}/>
       ))}
     </div>
   );

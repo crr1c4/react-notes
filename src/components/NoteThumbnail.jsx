@@ -5,7 +5,10 @@ const NoteThumbnail = (props) => {
   const { title, description, day, time } = note;
 
   return (
-    <div className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white w-full py-2 px-4 rounded-xl cursor-pointer select-none">
+    <div
+      onClick={() => console.log("clikced: ", note)}
+      className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white w-full py-2 px-4 rounded-xl cursor-pointer select-none"
+    >
       {/* Date */}
       <div className="text-xs float-right flex justify-center items-center gap-1">
         <span className="material-icons-round text-xs">schedule</span>

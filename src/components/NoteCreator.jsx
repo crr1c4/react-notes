@@ -16,6 +16,7 @@ const NoteCreator = (props) => {
 
   // todo: localstorage
   // todo: add focus to inputs
+  // todo: get message to this component
 
   const createNote = async () => {
     try {
