@@ -11,27 +11,27 @@ const App = () => {
   const [theme, changeTheme] = useTheme();
   const [focus, changeFocus] = useFocus();
 
+  const styles = `${theme} grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 h-screen bg-white`;
+
+  const mainScreenProps = {
+    theme,
+    focus,
+    changeFocus,
+  };
+
+  const sidePanelProps = {
+    theme,
+    changeTheme,
+    focus,
+    changeFocus,
+    notes: notesTest,
+  };
+
   return (
-    <div className={theme}>
-      <div className="grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 h-screen bg-white dark:bg-gray-900">
-        <SidePanel
-          theme={theme}
-          changeTheme={changeTheme}
-          notes={notesTest}
-
-          // custom 
-          focus={focus}
-          changeFocus={changeFocus}
-        />
-        <MainScreen
-          theme={theme}
-
-          // custom
-          focus={focus}
-          changeFocus={changeFocus}
-        />
-      </div>
-    </div>
+    <main className={styles}>
+      <SidePanel {...sidePanelProps} />
+      <MainScreen {...mainScreenProps} />
+    </main>
   );
 };
 

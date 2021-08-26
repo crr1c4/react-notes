@@ -9,7 +9,7 @@ const MainScreen = (props) => {
 
   return (
     <div
-      className={`max-h-screen sm:col-span-2 md:col-span-3 lg:col-span-2 col-span-full ${
+      className={`max-h-screen sm:col-span-2 md:col-span-3 lg:col-span-2 col-span-full dark:bg-gray-900 ${
         showNoteCreator ? "" : "hidden"
       } sm:block lg:col-span-3`}
     >
