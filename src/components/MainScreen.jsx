@@ -4,7 +4,7 @@ import NoteCreator from "./NoteCreator";
 import StartMenu from "./StartMenu";
 import NoteFocus from "./NoteFocus";
 
-const MainScreen = ({ theme, focus, changeFocus }) => {
+const MainScreen = ({ theme, focus, changeFocus, setNotes, storedNotes, currentID }) => {
   const styles = {
     container: `sm:block sm:col-span-2 md:col-span-3 lg:col-span-2 lg:col-span-3 dark:bg-gray-900 col-span-full max-h-screen ${
       focus === "create" || focus === "note" ? "" : "hidden"
@@ -16,9 +16,9 @@ const MainScreen = ({ theme, focus, changeFocus }) => {
       {focus === "start" ? (
         <StartMenu theme={theme} />
       ) : focus === "create" ? (
-        <NoteCreator changeFocus={changeFocus} />
+        <NoteCreator changeFocus={changeFocus} setNotes={setNotes} storedNotes={storedNotes} />
       ) : (
-        <NoteFocus />
+        <NoteFocus currentID={currentID} storedNotes={storedNotes} changeFocus={changeFocus}/>
       )}
     </div>
   );

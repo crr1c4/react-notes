@@ -3,7 +3,7 @@ import { v4 as generateID } from "uuid";
 
 import ErrorMessage from "./ErrorMessage";
 
-const NoteCreator = ({ changeFocus }) => {
+const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
@@ -21,16 +21,16 @@ const NoteCreator = ({ changeFocus }) => {
       if (title === "") throw "Empty Title.";
       if (description === "") throw "Empty Description.";
 
-      const note = {
+      const newNote = {
         id: generateID(),
         title,
         description,
-        done: false,
         day: date.toLocaleDateString(),
         time: date.toLocaleTimeString(),
       };
 
-      console.log(note);
+      setNotes([...storedNotes, newNote]);
+      clearInputs();
     } catch (err) {
       setError(err);
     }

@@ -1,7 +1,7 @@
 import React from "react";
 
-const NoteThumbnail = ({ note, changeFocus }) => {
-  const { title, description, day, time } = note;
+const NoteThumbnail = ({ note, changeFocus, setCurrentID }) => {
+  const { title, description, day, time, id } = note;
   const styles = {
     container:
       "hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white bg-white w-full py-2 px-4 rounded-xl cursor-pointer select-none",
@@ -12,8 +12,13 @@ const NoteThumbnail = ({ note, changeFocus }) => {
     descriptionContainer: "text-sm",
   };
 
+  const focusNote = () => {
+    setCurrentID(id);
+    changeFocus("note");
+  };
+
   return (
-    <div onClick={() => changeFocus("note")} className={styles.container}>
+    <div onClick={focusNote} className={styles.container}>
       <div className={styles.dateContainer}>
         <span className={styles.dateIcon}>schedule</span>
         <span className={styles.dateText}>
