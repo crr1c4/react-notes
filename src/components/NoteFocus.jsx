@@ -1,9 +1,26 @@
 import React from "react";
 
-function NoteFocused({ currentID, storedNotes, changeFocus }) {
+function NoteFocused({
+  currentID,
+  storedNotes,
+  changeFocus,
+  setCurrentID,
+  setNotes,
+}) {
   const { title, description, day, time, id } = storedNotes.filter(
     (note) => note.id === currentID
   )[0];
+
+  const goBack = () => {
+    changeFocus("start");
+    setCurrentID("");
+  };
+
+  const deleteNote = () => {
+    const notes = storedNotes.filter((note) => note.id !== id);
+    goBack();
+    setNotes(notes);
+  };
 
   const styles = {
     container:
@@ -54,10 +71,7 @@ function NoteFocused({ currentID, storedNotes, changeFocus }) {
       </div>
 
       <div className={styles.buttonContainer}>
-        <button
-          onClick={() => changeFocus("start")}
-          className={`${styles.blueButton} sm:hidden`}
-        >
+        <button onClick={goBack} className={`${styles.blueButton} sm:hidden`}>
           <span className={styles.icon}>arrow_back</span>
           <span className="uppercase">go back</span>
         </button>
@@ -65,7 +79,7 @@ function NoteFocused({ currentID, storedNotes, changeFocus }) {
           <span className={styles.icon}>edit</span>
           <span className="uppercase">edit</span>
         </button>
-        <button className={styles.redButton}>
+        <button onClick={deleteNote} className={styles.redButton}>
           <span className={styles.icon}>delete</span>
           <span className="uppercase">delete</span>
         </button>

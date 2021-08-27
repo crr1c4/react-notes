@@ -30,7 +30,8 @@ const App = () => {
     changeFocus,
     setNotes,
     storedNotes,
-    currentID
+    currentID,
+    setCurrentID
   };
 
   return (
