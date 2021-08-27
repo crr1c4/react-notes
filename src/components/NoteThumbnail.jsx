@@ -1,18 +1,22 @@
 import React from "react";
 
-const NoteThumbnail = (props) => {
-  const { note, changeFocus } = props;
+const NoteThumbnail = ({ note, changeFocus }) => {
   const { title, description, day, time } = note;
+  const styles = {
+    container:
+      "hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white bg-white w-full py-2 px-4 rounded-xl cursor-pointer select-none",
+    dateContainer: "text-xs float-right flex justify-center items-center gap-1",
+    dateIcon: "material-icons-round text-xs",
+    dateText: "font-semibold",
+    titleContainer: "text-xl font-bold",
+    descriptionContainer: "text-sm",
+  };
 
   return (
-    <div
-      onClick={() => changeFocus("note")}
-      className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white w-full py-2 px-4 rounded-xl cursor-pointer select-none"
-    >
-      {/* Date */}
-      <div className="text-xs float-right flex justify-center items-center gap-1">
-        <span className="material-icons-round text-xs">schedule</span>
-        <span className="font-semibold">
+    <div onClick={() => changeFocus("note")} className={styles.container}>
+      <div className={styles.dateContainer}>
+        <span className={styles.dateIcon}>schedule</span>
+        <span className={styles.dateText}>
           {day === new Date().toLocaleDateString()
             ? time.endsWith(":")
               ? time.substr(0, 4)
@@ -20,13 +24,13 @@ const NoteThumbnail = (props) => {
             : day}
         </span>
       </div>
-      {/* Title */}
-      <div className="text-xl font-bold">
+
+      <div className={styles.titleContainer}>
         {title.substr(0, 15)}
         {title.length > 15 && !title.substr(0, 15).endsWith(" ") ? "..." : ""}
       </div>
-      {/* Description */}
-      <div className="text-sm">
+
+      <div className={styles.descriptionContainer}>
         {description.substr(0, 100)}
         {description.length > 100 ? "..." : ""}
       </div>

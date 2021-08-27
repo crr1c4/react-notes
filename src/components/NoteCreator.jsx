@@ -1,24 +1,19 @@
-import React from "react";
-import { v4 as genId } from "uuid";
+import React, { useState } from "react";
+import { v4 as generateID } from "uuid";
+
 import ErrorMessage from "./ErrorMessage";
 
-const NoteCreator = (props) => {
-  const { changeFocus } = props;
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [showError, setShowError] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(null);
+const NoteCreator = ({ changeFocus }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
 
   const clearInputs = () => {
     setTitle("");
     setDescription("");
   };
 
-  // todo: localstorage
-  // todo: add focus to inputs
-  // todo: get message to this component
-
-  const createNote = async () => {
+  const createNote = () => {
     try {
       const date = new Date();
 
@@ -27,7 +22,7 @@ const NoteCreator = (props) => {
       if (description === "") throw "Empty Description.";
 
       const note = {
-        id: genId(),
+        id: generateID(),
         title,
         description,
         done: false,
@@ -37,68 +32,85 @@ const NoteCreator = (props) => {
 
       console.log(note);
     } catch (err) {
-      setErrorMessage(err);
-      setShowError(true);
+      setError(err);
     }
   };
 
+  const styles = {
+    container:
+      "dark:text-white relative text-black min-h-full flex flex-col justify-center items-center select-none gap-5",
+    icon: "material-icons-round",
+    titleContainer: "flex justify-center items-center text-4xl lg:text-6xl",
+    titleIcon: `lg:text-6xl material-icons-round text-4xl`,
+    titleText: "uppercase font-bold",
+    inputTitleContainer:
+      "dark:bg-gray-800 lg:w-2/4 rounded-xl bg-gray-100 p-2 w-11/12 flex flex-row items-center",
+    inputTitle: "outline-none bg-transparent w-full",
+    textareaContainer:
+      "dark:bg-gray-800 lg:w-2/4 rounded-xl bg-gray-100 p-2 h-60 w-11/12 flex flex-row items-center",
+    inputTextarea:
+      "resize-none w-full h-full outline-none border-0 bg-transparent",
+    controls:
+      "sm:grid-rows-2 lg:grid-rows-none lg:grid-cols-2 lg:w-2/4 w-11/12 grid grid-rows-3 gap-3",
+    blueButton:
+      "hover:bg-blue-700 dark:bg-indigo-800 bg-blue-600 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 select-none",
+    redButton:
+      "sm:hidden dark:hover:bg-red-500 hover:bg-red-700 bg-red-600 text-white uppercase font-semibold py-2 w-full rounded-xl select-none",
+    returnLink: "sm:block underline cursor-pointer text-xs hidden",
+  };
+
+  const errorMessageProps = {
+    error,
+    setError,
+  };
+
   return (
-    <div className="relative text-black dark:text-white min-h-full flex flex-col justify-center items-center select-none gap-5">
-      {showError ? (
-        <ErrorMessage errorMessage={errorMessage} setShowError={setShowError} />
-      ) : null}
-      <div className="flex justify-center items-center text-4xl lg:text-6xl">
-        <span className="material-icons-round text-4xl lg:text-6xl">
-          note_add
-        </span>
-        <span className="uppercase font-bold">new note</span>
+    <div className={styles.container}>
+      {error.length !== 0 ? <ErrorMessage {...errorMessageProps} /> : null}
+
+      <div className={styles.titleContainer}>
+        <span className={styles.titleIcon}>note_add</span>
+        <span className={styles.titleText}>new note</span>
       </div>
 
-      <div className="rounded-xl bg-gray-100 dark:bg-gray-800 p-2 w-11/12 lg:w-2/4 flex flex-row items-center">
-        <span className="material-icons-round">title</span>
+      <div className={styles.inputTitleContainer}>
+        <span className={styles.icon}>title</span>
         <input
           type="text"
           placeholder="Enter title here..."
-          className="outline-none bg-transparent w-full"
+          className={styles.inputTitle}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
-      <div className="rounded-xl bg-gray-100 dark:bg-gray-800 p-2 h-60 w-11/12 lg:w-2/4 flex flex-row items-center">
+      <div className={styles.textareaContainer}>
         <textarea
           placeholder="Enter description here..."
-          className="resize-none w-full h-full outline-none border-0 bg-transparent"
+          className={styles.inputTextarea}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
 
-      <div className="w-11/12 lg:w-2/4 grid grid-rows-3 sm:grid-rows-2 lg:grid-rows-none lg:grid-cols-2 gap-3">
-        <button
-          className="bg-blue-600 dark:bg-indigo-800 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 hover:bg-blue-700 select-none"
-          onClick={clearInputs}
-        >
+      <div className={styles.controls}>
+        <button className={styles.blueButton} onClick={clearInputs}>
           clear
         </button>
-        <button
-          className="bg-blue-600 dark:bg-indigo-800 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 hover:bg-blue-700 select-none"
-          onClick={createNote}
-        >
+
+        <button className={styles.blueButton} onClick={createNote}>
           create
         </button>
+
         <button
           onClick={() => changeFocus("start")}
-          className="bg-red-600 text-white hover:bg-red-700 uppercase font-semibold py-2 w-full rounded-xl select-none sm:hidden dark:hover:bg-red-500"
+          className={styles.redButton}
         >
           cancel
         </button>
       </div>
 
-      <div
-        className="underline cursor-pointer text-xs hidden sm:block"
-        onClick={() => changeFocus("start")}
-      >
+      <div className={styles.returnLink} onClick={() => changeFocus("start")}>
         Return to start page
       </div>
     </div>
