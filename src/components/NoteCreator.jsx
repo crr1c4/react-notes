@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { v4 as generateID } from "uuid";
 
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "./messages/ErrorMessage";
+import CreatedMessage from "./messages/CreatedMessage";
 
 const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
+  const [created, setCreated] = useState(false);
 
   const clearInputs = () => {
     setTitle("");
@@ -30,6 +32,8 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
       };
 
       setNotes([...storedNotes, newNote]);
+      setCreated(true);
+      setTimeout(() => setCreated(false), 2000);
       clearInputs();
     } catch (err) {
       setError(err);
@@ -64,15 +68,19 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
     setError,
   };
 
+  const createdMessageProps = {
+    created,
+    setCreated,
+  };
+
   return (
     <div className={styles.container}>
       {error.length !== 0 ? <ErrorMessage {...errorMessageProps} /> : null}
-
+      {created ? <CreatedMessage {...createdMessageProps} /> : null}
       <div className={styles.titleContainer}>
         <span className={styles.titleIcon}>note_add</span>
         <span className={styles.titleText}>new note</span>
       </div>
-
       <div className={styles.inputTitleContainer}>
         <span className={styles.icon}>title</span>
         <input
@@ -83,7 +91,6 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-
       <div className={styles.textareaContainer}>
         <textarea
           placeholder="Enter description here..."
@@ -92,7 +99,6 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
-
       <div className={styles.controls}>
         <button className={styles.blueButton} onClick={clearInputs}>
           clear
@@ -109,7 +115,6 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
           cancel
         </button>
       </div>
-
       <div className={styles.returnLink} onClick={() => changeFocus("start")}>
         Return to start page
       </div>
