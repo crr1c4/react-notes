@@ -36,7 +36,7 @@ const NoteThumbnail = ({ note, changeFocus, setCurrentID }) => {
       </div>
 
       <div className={styles.descriptionContainer}>
-        {description.substr(0, 100)}
+        {description.indexOf(" ") === -1 ? `${description.substr(0, 20)}...` : description.substr(0, 100)}
         {description.length > 100 ? "..." : ""}
       </div>
     </div>
