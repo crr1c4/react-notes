@@ -2,7 +2,6 @@ import React from "react";
 
 import MainScreen from "./components/MainScreen";
 import SidePanel from "./components/SidePanel";
-// import notesTest from "./examples/test";
 
 import { useTheme } from "./hooks/useTheme";
 import { useFocus } from "./hooks/useFocus";
@@ -43,5 +42,6 @@ const App = () => {
 };
 
 export default App;
-// TODO: Complete focus note component.
-// TODO: Add localstorage hook.
+// TODO: add edit component
+// TODO: adapt focus hook to edit component
+// TODO: doc all code xD

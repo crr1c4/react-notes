@@ -3,6 +3,7 @@ import React from "react";
 import NoteCreator from "./NoteCreator";
 import StartMenu from "./StartMenu";
 import NoteFocus from "./NoteFocus";
+import NoteEditor from "./NoteEditor";
 
 const MainScreen = ({
   theme,
@@ -15,7 +16,7 @@ const MainScreen = ({
 }) => {
   const styles = {
     container: `sm:block sm:col-span-2 md:col-span-3 lg:col-span-2 lg:col-span-3 dark:bg-gray-900 col-span-full max-h-screen ${
-      focus === "create" || focus === "note" ? "" : "hidden"
+      focus === "create" || focus === "note" || focus === "edit" ? "" : "hidden"
     }`,
   };
 
@@ -30,7 +31,15 @@ const MainScreen = ({
     storedNotes,
     changeFocus,
     setCurrentID,
-    setNotes
+    setNotes,
+  };
+
+  const noteEditorFocus = {
+    currentID,
+    storedNotes,
+    changeFocus,
+    // setCurrentID,
+    setNotes,
   };
 
   return (
@@ -39,9 +48,12 @@ const MainScreen = ({
         <StartMenu theme={theme} />
       ) : focus === "create" ? (
         <NoteCreator {...noteCreatorProps} />
+      ) : focus === "edit" ? (
+        <NoteEditor {...noteEditorFocus} />
       ) : (
         <NoteFocus {...noteFocusProps} />
       )}
+      ))
     </div>
   );
 };

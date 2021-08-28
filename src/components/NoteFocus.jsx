@@ -16,6 +16,10 @@ function NoteFocused({
     setCurrentID("");
   };
 
+  const updateNote = () => {
+    changeFocus("edit");
+  };
+
   const deleteNote = () => {
     const notes = storedNotes.filter((note) => note.id !== id);
     goBack();
@@ -75,7 +79,7 @@ function NoteFocused({
           <span className={styles.icon}>arrow_back</span>
           <span className="uppercase">go back</span>
         </button>
-        <button className={styles.blueButton}>
+        <button onClick={updateNote} className={styles.blueButton}>
           <span className={styles.icon}>edit</span>
           <span className="uppercase">edit</span>
         </button>

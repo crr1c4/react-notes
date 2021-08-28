@@ -1,40 +1,41 @@
 import React, { useState } from "react";
-import { v4 as generateID } from "uuid";
 
 import ErrorMessage from "./messages/ErrorMessage";
 import CreatedMessage from "./messages/CreatedMessage";
 
-const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+const NoteEditor = ({ currentID, storedNotes, changeFocus, setNotes }) => {
+  const { title, description, id, day, time } = storedNotes.filter(
+    (note) => note.id === currentID
+  )[0];
+
+  const [editedTitle, setEditedTitle] = useState(title);
+  const [editedDescription, setEditedDescription] = useState(description);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const clearInputs = () => {
-    setTitle("");
-    setDescription("");
+  const cancelAndReturn = () => {
+    changeFocus("note");
   };
 
-  const createNote = () => {
+  const updateNote = () => {
     try {
-      const date = new Date();
+      if (editedTitle === "" && editedDescription === "") throw "Empty fields.";
+      if (editedTitle === "") throw "Empty Title.";
+      if (editedDescription === "") throw "Empty Description.";
 
-      if (title === "" && description === "") throw "Empty fields.";
-      if (title === "") throw "Empty Title.";
-      if (description === "") throw "Empty Description.";
+      setSuccess("Note edited.");
+      setTimeout(() => setSuccess(""), 2000);
 
       const newNote = {
-        id: generateID(),
-        title,
-        description,
-        day: date.toLocaleDateString(),
-        time: date.toLocaleTimeString(),
+        id,
+        title: editedTitle,
+        description: editedDescription,
+        day,
+        time,
       };
 
-      setNotes([...storedNotes, newNote]);
-      setSuccess("Note created");
-      setTimeout(() => setSuccess(""), 2000);
-      clearInputs();
+      const notes = storedNotes.filter((note) => note.id !== id);
+      setNotes([...notes, newNote]);
     } catch (err) {
       setError(err);
     }
@@ -55,12 +56,11 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
     inputTextarea:
       "resize-none w-full h-full outline-none border-0 bg-transparent",
     controls:
-      "sm:grid-rows-2 lg:grid-rows-none lg:grid-cols-2 lg:w-2/4 w-11/12 grid grid-rows-3 gap-3",
+      "sm:grid-rows-2 md:grid-rows-none md:grid-cols-2 lg:w-2/4 w-11/12 grid grid-rows-3 gap-3",
     blueButton:
       "hover:bg-blue-700 dark:bg-indigo-800 bg-blue-600 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 select-none",
     redButton:
-      "sm:hidden dark:hover:bg-red-500 hover:bg-red-700 bg-red-600 text-white uppercase font-semibold py-2 w-full rounded-xl select-none",
-    returnLink: "sm:block underline cursor-pointer text-xs hidden",
+      "dark:hover:bg-red-500 hover:bg-red-700 bg-red-600 text-white uppercase font-semibold py-2 w-full rounded-xl select-none",
   };
 
   const errorMessageProps = {
@@ -70,16 +70,19 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
 
   const createdMessageProps = {
     setSuccess,
-    success
+    success,
   };
 
   return (
     <div className={styles.container}>
       {error.length !== 0 ? <ErrorMessage {...errorMessageProps} /> : null}
-      {success.length !== 0 ? <CreatedMessage {...createdMessageProps} /> : null}
+      {success.length !== 0 ? (
+        <CreatedMessage {...createdMessageProps} />
+      ) : null}
+
       <div className={styles.titleContainer}>
-        <span className={styles.titleIcon}>note_add</span>
-        <span className={styles.titleText}>new note</span>
+        <span className={styles.titleIcon}>edit</span>
+        <span className={styles.titleText}>edit note</span>
       </div>
       <div className={styles.inputTitleContainer}>
         <span className={styles.icon}>title</span>
@@ -87,39 +90,29 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
           type="text"
           placeholder="Enter title here..."
           className={styles.inputTitle}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={editedTitle}
+          onChange={(e) => setEditedTitle(e.target.value)}
         />
       </div>
       <div className={styles.textareaContainer}>
         <textarea
           placeholder="Enter description here..."
           className={styles.inputTextarea}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={editedDescription}
+          onChange={(e) => setEditedDescription(e.target.value)}
         ></textarea>
       </div>
       <div className={styles.controls}>
-        <button className={styles.blueButton} onClick={clearInputs}>
-          clear
+        <button onClick={updateNote} className={styles.blueButton}>
+          update
         </button>
 
-        <button className={styles.blueButton} onClick={createNote}>
-          create
-        </button>
-
-        <button
-          onClick={() => changeFocus("start")}
-          className={styles.redButton}
-        >
+        <button onClick={cancelAndReturn} className={styles.redButton}>
           cancel
         </button>
-      </div>
-      <div className={styles.returnLink} onClick={() => changeFocus("start")}>
-        Return to start page
       </div>
     </div>
   );
 };
 
-export default NoteCreator;
+export default NoteEditor;

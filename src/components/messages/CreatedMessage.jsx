@@ -1,8 +1,8 @@
 import React from 'react'
 
 function CreatedMessage({
-  created,
-  setCreated,
+  success,
+  setSuccess
 }) {
   const styles = {
     container:
@@ -18,10 +18,10 @@ function CreatedMessage({
     <div className={styles.container}>
       <div className={styles.textContainer}>
         <span className={styles.icon}>done</span>
-        <span className={styles.textDescription}>Note Created</span>{" "}
+        <span className={styles.textDescription}>{success}</span>{" "}
       </div>
 
-      <button onClick={() => setCreated(false)} className={styles.closeButton}>
+      <button onClick={() => setSuccess("")} className={styles.closeButton}>
         <span className={styles.icon}>close</span>
       </button>
     </div>)
