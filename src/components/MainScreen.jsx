@@ -53,7 +53,6 @@ const MainScreen = ({
       ) : (
         <NoteFocus {...noteFocusProps} />
       )}
-      ))
     </div>
   )
 }
