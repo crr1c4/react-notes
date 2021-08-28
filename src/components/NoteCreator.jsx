@@ -1,77 +1,76 @@
-import React, { useState } from "react";
-import { v4 as generateID } from "uuid";
+import React, { useState } from 'react'
+import { v4 as generateID } from 'uuid'
 
-import ErrorMessage from "./messages/ErrorMessage";
-import CreatedMessage from "./messages/CreatedMessage";
+import ErrorMessage from './messages/ErrorMessage'
+import CreatedMessage from './messages/CreatedMessage'
 
 const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   const clearInputs = () => {
-    setTitle("");
-    setDescription("");
-  };
+    setTitle('')
+    setDescription('')
+  }
 
   const createNote = () => {
     try {
-      const date = new Date();
+      const date = new Date()
 
-      if (title === "" && description === "") throw "Empty fields.";
-      if (title === "") throw "Empty Title.";
-      if (description === "") throw "Empty Description.";
+      if (title === '' && description === '') throw 'Empty fields.'
+      if (title === '') throw 'Empty Title.'
+      if (description === '') throw 'Empty Description.'
 
       const newNote = {
         id: generateID(),
         title,
         description,
         day: date.toLocaleDateString(),
-        time: date.toLocaleTimeString(),
-      };
+        time: date.toLocaleTimeString()
+      }
 
-      setNotes([...storedNotes, newNote]);
-      setSuccess("Note created");
-      setTimeout(() => setSuccess(""), 2000);
-      clearInputs();
+      setNotes([...storedNotes, newNote])
+      setSuccess('Note created')
+      clearInputs()
     } catch (err) {
-      setError(err);
+      setError(err)
     }
-  };
+  }
 
   const styles = {
     container:
-      "dark:text-white relative text-black min-h-full flex flex-col justify-center items-center select-none gap-5",
-    icon: "material-icons-round",
-    titleContainer: "flex justify-center items-center text-4xl lg:text-6xl",
-    titleIcon: `lg:text-6xl material-icons-round text-4xl`,
-    titleText: "uppercase font-bold",
+      'dark:text-white relative text-black min-h-full flex flex-col justify-center items-center select-none gap-5',
+    icon: 'material-icons-round',
+    titleContainer: 'flex justify-center items-center text-4xl lg:text-6xl',
+    titleIcon: 'lg:text-6xl material-icons-round text-4xl',
+    titleText: 'uppercase font-bold',
     inputTitleContainer:
-      "dark:bg-gray-800 lg:w-2/4 rounded-xl bg-gray-100 p-2 w-11/12 flex flex-row items-center",
-    inputTitle: "outline-none bg-transparent w-full",
+      'dark:bg-gray-800 lg:w-2/4 rounded-xl bg-gray-100 p-2 w-11/12 flex flex-row items-center',
+    inputTitle: 'outline-none bg-transparent w-full',
     textareaContainer:
-      "dark:bg-gray-800 lg:w-2/4 rounded-xl bg-gray-100 p-2 h-60 w-11/12 flex flex-row items-center",
+      'dark:bg-gray-800 lg:w-2/4 rounded-xl bg-gray-100 p-2 h-60 w-11/12 flex flex-row items-center',
     inputTextarea:
-      "resize-none w-full h-full outline-none border-0 bg-transparent",
+      'resize-none w-full h-full outline-none border-0 bg-transparent',
     controls:
-      "sm:grid-rows-2 lg:grid-rows-none lg:grid-cols-2 lg:w-2/4 w-11/12 grid grid-rows-3 gap-3",
+      'sm:grid-rows-2 lg:grid-rows-none lg:grid-cols-2 lg:w-2/4 w-11/12 grid grid-rows-3 gap-3',
     blueButton:
-      "hover:bg-blue-700 dark:bg-indigo-800 bg-blue-600 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 select-none",
+      'hover:bg-blue-700 dark:bg-indigo-800 bg-blue-600 text-white uppercase font-semibold py-2 w-full rounded-xl dark:hover:bg-indigo-700 select-none',
     redButton:
-      "sm:hidden dark:hover:bg-red-500 hover:bg-red-700 bg-red-600 text-white uppercase font-semibold py-2 w-full rounded-xl select-none",
-    returnLink: "sm:block underline cursor-pointer text-xs hidden",
-  };
+      'sm:hidden dark:hover:bg-red-500 hover:bg-red-700 bg-red-600 text-white uppercase font-semibold py-2 w-full rounded-xl select-none',
+    returnLink: 'sm:block underline cursor-pointer text-xs hidden'
+  }
 
   const errorMessageProps = {
     error,
-    setError,
-  };
+    setError
+  }
 
   const createdMessageProps = {
     setSuccess,
     success
-  };
+  }
 
   return (
     <div className={styles.container}>
@@ -84,8 +83,8 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
       <div className={styles.inputTitleContainer}>
         <span className={styles.icon}>title</span>
         <input
-          type="text"
-          placeholder="Enter title here..."
+          type='text'
+          placeholder='Enter title here...'
           className={styles.inputTitle}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -93,11 +92,11 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
       </div>
       <div className={styles.textareaContainer}>
         <textarea
-          placeholder="Enter description here..."
+          placeholder='Enter description here...'
           className={styles.inputTextarea}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
+        />
       </div>
       <div className={styles.controls}>
         <button className={styles.blueButton} onClick={clearInputs}>
@@ -109,17 +108,17 @@ const NoteCreator = ({ changeFocus, setNotes, storedNotes }) => {
         </button>
 
         <button
-          onClick={() => changeFocus("start")}
+          onClick={() => changeFocus('start')}
           className={styles.redButton}
         >
           cancel
         </button>
       </div>
-      <div className={styles.returnLink} onClick={() => changeFocus("start")}>
+      <div className={styles.returnLink} onClick={() => changeFocus('start')}>
         Return to start page
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NoteCreator;
+export default NoteCreator

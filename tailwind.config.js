@@ -1,14 +1,14 @@
 module.exports = {
   purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
-    fontFamily:{
-      serif: ["Rampart One", "cursive"]
+    fontFamily: {
+      serif: ['Rampart One', 'cursive']
     },
-    extend: {},
+    extend: {}
   },
   variants: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 }

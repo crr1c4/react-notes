@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import NoteCreator from "./NoteCreator";
-import StartMenu from "./StartMenu";
-import NoteFocus from "./NoteFocus";
-import NoteEditor from "./NoteEditor";
+import NoteCreator from './NoteCreator'
+import StartMenu from './StartMenu'
+import NoteFocus from './NoteFocus'
+import NoteEditor from './NoteEditor'
 
 const MainScreen = ({
   theme,
@@ -12,50 +12,50 @@ const MainScreen = ({
   setNotes,
   storedNotes,
   currentID,
-  setCurrentID,
+  setCurrentID
 }) => {
   const styles = {
     container: `sm:block sm:col-span-2 md:col-span-3 lg:col-span-2 lg:col-span-3 dark:bg-gray-900 col-span-full max-h-screen ${
-      focus === "create" || focus === "note" || focus === "edit" ? "" : "hidden"
-    }`,
-  };
+      focus === 'create' || focus === 'note' || focus === 'edit' ? '' : 'hidden'
+    }`
+  }
 
   const noteCreatorProps = {
     changeFocus,
     setNotes,
-    storedNotes,
-  };
+    storedNotes
+  }
 
   const noteFocusProps = {
     currentID,
     storedNotes,
     changeFocus,
     setCurrentID,
-    setNotes,
-  };
+    setNotes
+  }
 
   const noteEditorFocus = {
     currentID,
     storedNotes,
     changeFocus,
     // setCurrentID,
-    setNotes,
-  };
+    setNotes
+  }
 
   return (
     <div className={styles.container}>
-      {focus === "start" ? (
+      {focus === 'start' ? (
         <StartMenu theme={theme} />
-      ) : focus === "create" ? (
+      ) : focus === 'create' ? (
         <NoteCreator {...noteCreatorProps} />
-      ) : focus === "edit" ? (
+      ) : focus === 'edit' ? (
         <NoteEditor {...noteEditorFocus} />
       ) : (
         <NoteFocus {...noteFocusProps} />
       )}
       ))
     </div>
-  );
-};
+  )
+}
 
-export default MainScreen;
+export default MainScreen
